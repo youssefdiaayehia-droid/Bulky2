@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Bulky2-DataAccess/Bulky2-DataAccess.csproj" />
+  <Project Path="Bulky2-Models/Bulky2-Models.csproj" />
+  <Project Path="Bulky2-Utility/Bulky2-Utility.csproj" />
+  <Project Path="Bulky2/Bulky2.csproj" />
+</Solution>
