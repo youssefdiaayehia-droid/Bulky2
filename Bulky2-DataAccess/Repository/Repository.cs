@@ -17,17 +17,34 @@ namespace Bulky2_DataAccess.Repository
         {
             _db = db;
             this.dbset=_db.Set<T>();
+            _db.products.Include(u => u.Category).Include(u => u.CategoryId);
         }
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbset;
+            if (! string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var item in includeProperties
+                    .Split(new char[] {','},StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(item);
+                }
+            }
             return query.ToList();
         }
 
-        public T Get(Expression<Func<T, bool>> filter)
+        public T Get(Expression<Func<T, bool>> filter , string? includeProperties = null)
         {
             IQueryable<T> query = dbset;
             query = query.Where(filter);
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var item in includeProperties
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(item);
+                }
+            }
             return query.FirstOrDefault();
         }
 
